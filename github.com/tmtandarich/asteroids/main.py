@@ -1,8 +1,8 @@
-import pygame
+import pygame, sys
 from constants import SCREEN_WIDTH, SCREEN_HEIGHT
 from player import *
 from circleshape import *
-from logger import log_state
+from logger import log_state, log_event
 from asteroidfield import *
 
 
@@ -38,6 +38,12 @@ def main():
         dt = clock.tick(60) / 1000
         
         updatable.update(dt)
+
+        for asteroid in asteroids:
+            if player.collides_with(asteroid):
+                log_event("player_hit")
+                print("Game over!")
+                sys.exit()
 
         log_state()
         screen.fill("black")
